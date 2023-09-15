@@ -1,30 +1,40 @@
 import sys
 import time
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+import jieba
+import gensim
+import re
 
-# 计算文本的相似度
-def calculate_similarity(original_text, plagiarized_text):
-    # 创建TF-IDF向量化器
-    vectorizer = TfidfVectorizer()
-
-    # 将原文本和抄袭文本转换为TF-IDF向量
-    tfidf_matrix = vectorizer.fit_transform([original_text, plagiarized_text])
-
-    # 计算余弦相似度
-    cosine_sim = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1])
-
-    return cosine_sim[0][0]
+#传入过滤之后的数据，通过调用gensim.similarities.Similarity计算余弦相似度
+def calc_similarity(text1,text2):
+    texts=[text1,text2]
+    dictionary = gensim.corpora.Dictionary(texts)
+    corpus = [dictionary.doc2bow(text) for text in texts]
+    similarity = gensim.similarities.Similarity('-Similarity-index', corpus, num_features=len(dictionary))
+    test_corpus_1 = dictionary.doc2bow(text1)
+    cosine_sim = similarity[test_corpus_1][1]
+    return cosine_sim
 
 # 读取文本文件
-def read_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        text = file.read()
-    return text
+def get_file_contents(path):
+    str = ''
+    f = open(path, 'r', encoding='UTF-8')
+    line = f.readline()
+    while line:
+        str = str + line
+        line = f.readline()
+    f.close()
+    return str
+
+#将读取到的文件内容先进行jieba分词，然后再把标点符号、转义符号等特殊符号过滤掉
+def filter(str):
+    str = jieba.lcut(str)
+    result = []
+    for tags in str:
+        if (re.match(u"[a-zA-Z0-9\u4e00-\u9fa5]", tags)):
+            result.append(tags)
+        else:
+            pass
+    return result
 
 # 主函数
 def main():
@@ -41,11 +51,13 @@ def main():
 
     try:
         # 读取原文件和抄袭文件
-        original_text = read_file(original_file)
-        plagiarized_text = read_file(plagiarized_file)
+        str1 = get_file_contents(original_file)
+        str2 = get_file_contents(plagiarized_file)
+        text1 = filter(str1)
+        text2 = filter(str2)
 
         # 计算相似度
-        similarity = calculate_similarity(original_text, plagiarized_text)
+        similarity = calc_similarity(text1, text2)
 
         # 将相似度写入输出文件
         with open(output_file, 'w', encoding='utf-8') as file:
