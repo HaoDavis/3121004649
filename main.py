@@ -8,11 +8,12 @@ import re
 # 传入过滤之后的数据，通过调用gensim.similarities.Similarity计算余弦相似度
 def calc_similarity(text1, text2):
     texts = [text1, text2]
-    dictionary = gensim.corpora.Dictionary(texts)
-    corpus = [dictionary.doc2bow(text) for text in texts]
-    similarity = gensim.similarities.Similarity('-Similarity-index', corpus, num_features=len(dictionary))
-    test_corpus_1 = dictionary.doc2bow(text1)
-    cosine_sim = similarity[test_corpus_1][1]
+    dictionary = gensim.corpora.Dictionary(texts)  # 将文本中的单词映射到唯一的整数标识符
+    corpus = [dictionary.doc2bow(text) for text in texts]  # 将文本转换为词袋
+    similarity = gensim.similarities.Similarity('-Similarity-index', corpus,
+                                                num_features=len(dictionary))  # 计算词袋中所有词的频率
+    test_corpus_1 = dictionary.doc2bow(text1)  # 将要对比的文本转换为词袋
+    cosine_sim = similarity[test_corpus_1][1]  # 计算余弦相似度
     return cosine_sim
 
 
@@ -21,19 +22,18 @@ def get_file_contents(path):
     str = ''
     f = open(path, 'r', encoding='UTF-8')
     line = f.readline()
-    while line:
+    while line:  # 把每一行串联起来，相当于把文本变成了一行
         str = str + line
         line = f.readline()
     f.close()
     return str
 
 
-# 将读取到的文件内容先进行jieba分词，然后再把标点符号、转义符号等特殊符号过滤掉
 def filter(str):
-    str = jieba.lcut(str)
+    str = jieba.lcut(str)  # jieba分词
     result = []
     for tags in str:
-        if (re.match(u"[a-zA-Z0-9\u4e00-\u9fa5]", tags)):
+        if (re.match(u"[a-zA-Z0-9\u4e00-\u9fa5]", tags)):  # 过滤掉标点符号、转义符号等特殊符号
             result.append(tags)
         else:
             pass
