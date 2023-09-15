@@ -4,15 +4,17 @@ import jieba
 import gensim
 import re
 
-#传入过滤之后的数据，通过调用gensim.similarities.Similarity计算余弦相似度
-def calc_similarity(text1,text2):
-    texts=[text1,text2]
+
+# 传入过滤之后的数据，通过调用gensim.similarities.Similarity计算余弦相似度
+def calc_similarity(text1, text2):
+    texts = [text1, text2]
     dictionary = gensim.corpora.Dictionary(texts)
     corpus = [dictionary.doc2bow(text) for text in texts]
     similarity = gensim.similarities.Similarity('-Similarity-index', corpus, num_features=len(dictionary))
     test_corpus_1 = dictionary.doc2bow(text1)
     cosine_sim = similarity[test_corpus_1][1]
     return cosine_sim
+
 
 # 读取文本文件
 def get_file_contents(path):
@@ -25,7 +27,8 @@ def get_file_contents(path):
     f.close()
     return str
 
-#将读取到的文件内容先进行jieba分词，然后再把标点符号、转义符号等特殊符号过滤掉
+
+# 将读取到的文件内容先进行jieba分词，然后再把标点符号、转义符号等特殊符号过滤掉
 def filter(str):
     str = jieba.lcut(str)
     result = []
@@ -35,6 +38,7 @@ def filter(str):
         else:
             pass
     return result
+
 
 # 主函数
 def main():
@@ -68,9 +72,10 @@ def main():
         # 记录程序结束时间
         end_time = time.time()
 
-        print(f"相似度: {similarity:.2f}| 运行时间: {end_time - start_time:.2f}秒")
+        print(f"相似度: {similarity:.2f} | 运行时间: {end_time - start_time:.2f}秒")
     except Exception as e:
         print(f"发生错误: {str(e)}")
+
 
 if __name__ == '__main__':
     main()
