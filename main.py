@@ -29,32 +29,28 @@ def get_file_contents(path):
     return str
 
 
-def filter(str):
-    str = jieba.lcut(str)  # jieba分词
-    result = []
-    for tags in str:
-        if (re.match(u"[a-zA-Z0-9\u4e00-\u9fa5]", tags)):  # 过滤掉标点符号、转义符号等特殊符号
-            result.append(tags)
-        else:
-            pass
+def filter(string):
+    pattern = re.compile(u"[^a-zA-Z0-9\u4e00-\u9fa5]")  # 正则表达式，过滤掉非中文、非数字、非字母的字符
+    string = pattern.sub("", string)  # 将string中匹配到的字符替换成空字符
+    result = jieba.lcut(string)  # 分词
     return result
 
 
 # 主函数
 def main():
-    # if len(sys.argv) != 4:
-    #     print("用法: main.py [原文文件] [抄袭版论文的文件] [答案文件]")
-    #     sys.exit(1)
+    if len(sys.argv) != 4:
+        print("用法: main.py [原文文件] [抄袭版论文的文件] [答案文件]")
+        sys.exit(1)
 
     # 记录程序开始时间
     start_time = time.time()
 
-    # original_file = sys.argv[1]
-    # plagiarized_file = sys.argv[2]
-    # output_file = sys.argv[3]
-    original_file = 'test\orig.txt'
-    plagiarized_file = 'test\orig_0.8_add.txt'
-    output_file = 'test\output.txt'
+    original_file = sys.argv[1]
+    plagiarized_file = sys.argv[2]
+    output_file = sys.argv[3]
+    # original_file = 'test\orig.txt'
+    # plagiarized_file = 'test\orig_0.8_add.txt'
+    # output_file = 'test\output.txt'
     try:
         # 读取原文件和抄袭文件
         str1 = get_file_contents(original_file)
