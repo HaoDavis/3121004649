@@ -1,12 +1,11 @@
 import sys
+import time
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-nltk.download('punkt')
-nltk.download('stopwords')
 
 # 计算文本的相似度
 def calculate_similarity(original_text, plagiarized_text):
@@ -33,6 +32,9 @@ def main():
         print("用法: main.py [原文文件] [抄袭版论文的文件] [答案文件]")
         sys.exit(1)
 
+    # 记录程序开始时间
+    start_time = time.time()
+
     original_file = sys.argv[1]
     plagiarized_file = sys.argv[2]
     output_file = sys.argv[3]
@@ -49,6 +51,9 @@ def main():
         with open(output_file, 'w', encoding='utf-8') as file:
             file.write(f"文件{original_file}和文件{plagiarized_file}的相似度为：{similarity:.2f}")
 
-        print(f"相似度: {similarity:.2f}")
+        # 记录程序结束时间
+        end_time = time.time()
+
+        print(f"相似度: {similarity:.2f}| 运行时间: {end_time - start_time:.2f}秒")
     except Exception as e:
         print(f"发生错误: {str(e)}")
