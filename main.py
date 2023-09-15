@@ -38,17 +38,19 @@ def filter(str):
 
 # 主函数
 def main():
-    if len(sys.argv) != 4:
-        print("用法: main.py [原文文件] [抄袭版论文的文件] [答案文件]")
-        sys.exit(1)
+    # if len(sys.argv) != 4:
+    #     print("用法: main.py [原文文件] [抄袭版论文的文件] [答案文件]")
+    #     sys.exit(1)
 
     # 记录程序开始时间
     start_time = time.time()
 
-    original_file = sys.argv[1]
-    plagiarized_file = sys.argv[2]
-    output_file = sys.argv[3]
-
+    # original_file = sys.argv[1]
+    # plagiarized_file = sys.argv[2]
+    # output_file = sys.argv[3]
+    original_file = 'test\orig.txt'
+    plagiarized_file = 'test\orig_0.8_add.txt'
+    output_file = 'test\output.txt'
     try:
         # 读取原文件和抄袭文件
         str1 = get_file_contents(original_file)
@@ -69,3 +71,6 @@ def main():
         print(f"相似度: {similarity:.2f}| 运行时间: {end_time - start_time:.2f}秒")
     except Exception as e:
         print(f"发生错误: {str(e)}")
+
+if __name__ == '__main__':
+    main()
