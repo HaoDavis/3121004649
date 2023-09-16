@@ -1,5 +1,5 @@
 import unittest
-from main import get_file_contents, filter, calc_similarity, main_test
+from main import get_file_contents, filter, calc_similarity, main
 
 
 # 测试用例
@@ -39,7 +39,7 @@ class Case(unittest.TestCase):
         original_file = 'test/orig.txt'
         plagiarized_file = 'test/orig_0.8_add.txt'
         output_file = 'test/output.txt'
-        main_test(original_file, plagiarized_file, output_file)
+        main(original_file, plagiarized_file, output_file)
         with open(output_file, 'r', encoding='utf-8') as file:
             result = file.read()
         expected_result = "文件test/orig.txt和文件test/orig_0.8_add.txt的相似度为：0.99"
@@ -50,7 +50,7 @@ class Case(unittest.TestCase):
         original_file = 'test/orig.txt'
         plagiarized_file = 'test/empty.txt'
         output_file = 'test/output.txt'
-        main_test(original_file, plagiarized_file, output_file)
+        main(original_file, plagiarized_file, output_file)
         with open(output_file, 'r', encoding='utf-8') as file:
             result = file.read()
         expected_result = "文件test/orig.txt和文件test/empty.txt的相似度为：0.00"
@@ -61,7 +61,7 @@ class Case(unittest.TestCase):
         original_file = 'test/orig.txt'
         plagiarized_file = 'test/orig_0.8_dis_1.txt'
         output_file = 'test/output.txt'
-        main_test(original_file, plagiarized_file, output_file)
+        main(original_file, plagiarized_file, output_file)
         with open(output_file, 'r', encoding='utf-8') as file:
             result = file.read()
         expected_result = "文件test/orig.txt和文件test/orig_0.8_dis_1.txt的相似度为：1.00"
@@ -72,7 +72,7 @@ class Case(unittest.TestCase):
         original_file = 'test/orig.txt'
         plagiarized_file = 'test/orig_0.8_dis_10.txt'
         output_file = 'test/output.txt'
-        main_test(original_file, plagiarized_file, output_file)
+        main(original_file, plagiarized_file, output_file)
         with open(output_file, 'r', encoding='utf-8') as file:
             result = file.read()
         expected_result = "文件test/orig.txt和文件test/orig_0.8_dis_10.txt的相似度为：0.99"
@@ -83,7 +83,7 @@ class Case(unittest.TestCase):
         original_file = 'test/orig.txt'
         plagiarized_file = 'test/orig_0.8_dis_15.txt'
         output_file = 'test/output.txt'
-        main_test(original_file, plagiarized_file, output_file)
+        main(original_file, plagiarized_file, output_file)
         with open(output_file, 'r', encoding='utf-8') as file:
             result = file.read()
         expected_result = "文件test/orig.txt和文件test/orig_0.8_dis_15.txt的相似度为：0.98"
@@ -94,7 +94,7 @@ class Case(unittest.TestCase):
         original_file = 'test/orig.txt'
         plagiarized_file = 'test/orig_0.8_del.txt'
         output_file = 'test/output.txt'
-        main_test(original_file, plagiarized_file, output_file)
+        main(original_file, plagiarized_file, output_file)
         with open(output_file, 'r', encoding='utf-8') as file:
             result = file.read()
         expected_result = "文件test/orig.txt和文件test/orig_0.8_del.txt的相似度为：0.99"
@@ -105,7 +105,7 @@ class Case(unittest.TestCase):
         original_file = 'test/orig.txt'
         plagiarized_file = 'test/orig_del.txt'
         output_file = 'test/output.txt'
-        main_test(original_file, plagiarized_file, output_file)
+        main(original_file, plagiarized_file, output_file)
         with open(output_file, 'r', encoding='utf-8') as file:
             result = file.read()
         expected_result = "文件test/orig.txt和文件test/orig_del.txt的相似度为：0.81"
