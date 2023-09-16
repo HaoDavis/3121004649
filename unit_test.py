@@ -90,11 +90,11 @@ class Case(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_main_test6(self):
-        # 测试原文件不存在的情形
+        # 测试原文文件不存在的情形
         original_file = 'test/orig1.txt'
         plagiarized_file = 'test/orig_0.8_dis_15.txt'
         output_file = 'test/output.txt'
-        # 如果原文件不存在，应该打印错误消息并返回非零退出码
+        # 如果原文文件不存在，应该打印错误消息并返回非零退出码
         with self.assertRaises(SystemExit) as cm:
             main(original_file, plagiarized_file, output_file)
 
