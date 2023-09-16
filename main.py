@@ -1,3 +1,4 @@
+import os.path
 import sys
 import time
 import jieba
@@ -38,6 +39,12 @@ def filter(string):
 
 # 主函数
 def main(original_file, plagiarized_file, output_file):
+    if not os.path.exists(original_file):
+        print("原文文件不存在")
+        sys.exit(1)
+    if not os.path.exists(plagiarized_file):
+        print("抄袭版论文文件不存在")
+        sys.exit(2)
     # 记录程序开始时间
     start_time = time.time()
     # 读取原文件和抄袭文件
