@@ -69,7 +69,7 @@ def main(original_file, plagiarized_file, output_file):
 if __name__ == '__main__':
     if len(sys.argv) != 4:
         print("用法: main.py [原文文件] [抄袭版论文的文件] [答案文件]")
-        sys.exit(1)
+        sys.exit(3)
     original_file = sys.argv[1]
     plagiarized_file = sys.argv[2]
     output_file = sys.argv[3]
