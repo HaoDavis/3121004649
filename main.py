@@ -40,26 +40,23 @@ def filter(string):
 def main(original_file, plagiarized_file, output_file):
     # 记录程序开始时间
     start_time = time.time()
-    try:
-        # 读取原文件和抄袭文件
-        str1 = get_file_contents(original_file)
-        str2 = get_file_contents(plagiarized_file)
-        text1 = filter(str1)
-        text2 = filter(str2)
+    # 读取原文件和抄袭文件
+    str1 = get_file_contents(original_file)
+    str2 = get_file_contents(plagiarized_file)
+    text1 = filter(str1)
+    text2 = filter(str2)
 
-        # 计算相似度
-        similarity = calc_similarity(text1, text2)
+    # 计算相似度
+    similarity = calc_similarity(text1, text2)
 
-        # 将相似度写入输出文件
-        with open(output_file, 'w', encoding='utf-8') as file:
-            file.write(f"文件{original_file}和文件{plagiarized_file}的相似度为：{similarity:.2f}")
+    # 将相似度写入输出文件
+    with open(output_file, 'w', encoding='utf-8') as file:
+        file.write(f"文件{original_file}和文件{plagiarized_file}的相似度为：{similarity:.2f}")
 
-        # 记录程序结束时间
-        end_time = time.time()
+    # 记录程序结束时间
+    end_time = time.time()
 
-        print(f"相似度: {similarity:.2f} | 运行时间: {end_time - start_time:.2f}秒")
-    except Exception as e:
-        print(f"发生错误: {str(e)}")
+    print(f"相似度: {similarity:.2f} | 运行时间: {end_time - start_time:.2f}秒")
 
 
 if __name__ == '__main__':
