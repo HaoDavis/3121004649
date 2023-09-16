@@ -1,1 +1,1 @@
-文件test/orig.txt和文件test/orig_del.txt的相似度为：0.81
+文件test\orig.txt和文件test\orig_del.txt的相似度为：0.81
